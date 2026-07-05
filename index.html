@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magic Rose — Gesture Controlled 3D Flower</title>
+  <link rel="stylesheet" href="/src/styles/main.css" />
+</head>
+<body>
+  <!-- Three.js renders into this container -->
+  <div id="scene-container"></div>
+
+  <!-- Hidden webcam feed, used only as MediaPipe's input source -->
+  <video id="webcam" autoplay playsinline muted></video>
+
+  <!-- Optional debug overlay for hand landmarks (toggle in Phase 3) -->
+  <canvas id="debug-canvas"></canvas>
+
+  <!-- UI overlay (loading state, gesture hints) -->
+  <div id="ui-overlay">
+    <p id="status-text">Loading Magic Rose...</p>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

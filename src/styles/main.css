@@ -1,0 +1,95 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000; /* fallback only, webcam covers this once loaded */
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* --- AR LAYER 1 (bottom): live webcam feed, fills the screen --- */
+#webcam {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* object-fit: contain (not cover) — shows the ENTIRE camera frame
+     (head to waist/torso) instead of cropping in tight on the face.
+     "cover" was the cause of the over-zoomed look on portrait/narrow
+     screens: it crops away most of the width to fill the viewport. */
+  object-fit: contain;
+  background: #0a0a10;    /* fills letterbox bars with a clean dark tone */
+  transform: scaleX(-1);   /* mirror so it feels like a mirror/selfie view */
+  z-index: 0;
+}
+
+/* --- Vignette + frame border overlay, purely decorative, no extra HTML needed --- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow: inset 0 0 min(16vw, 200px) rgba(0, 0, 0, 0.6);
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 14px;
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid rgba(157, 123, 255, 0.28);
+  border-radius: 16px;
+}
+
+/* --- AR LAYER 2 (top): transparent Three.js canvas renders over the webcam --- */
+#scene-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none; /* let clicks pass through to page beneath if ever needed */
+}
+
+#scene-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Full-screen debug overlay, drawn directly on top of the hand. Toggle with ?debug=1 */
+#debug-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  display: none; /* toggled via JS when ?debug=1 is present */
+  z-index: 4;
+}
+
+#ui-overlay {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  color: #e8e8ff;
+  z-index: 5;
+  pointer-events: none;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8); /* readable over any webcam background */
+}
+
+#status-text {
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  opacity: 0.9;
+}
