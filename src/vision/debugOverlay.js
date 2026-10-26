@@ -30,6 +30,20 @@ export function initDebugOverlay(video) {
   window.addEventListener('resize', resizeCanvas);
 }
 
+/** Toggles debug landmark mesh display on the fly. */
+export function toggleDebugOverlay() {
+  debugEnabled = !debugEnabled;
+  canvas.style.display = debugEnabled ? 'block' : 'none';
+  if (!debugEnabled) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  return debugEnabled;
+}
+
+export function isDebugEnabled() {
+  return debugEnabled;
+}
+
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;

@@ -1,8 +1,31 @@
 {
   "name": "magic-rose",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "An interactive Augmented Reality 3D rose that sprouts and blooms in your palm using Three.js and MediaPipe hand gesture tracking.",
   "type": "module",
+  "author": "Harshit Tomar (https://github.com/harshit-tomar-dev)",
+  "license": "MIT",
+  "homepage": "https://github.com/harshit-tomar-dev/magic-rose#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harshit-tomar-dev/magic-rose.git"
+  },
+  "bugs": {
+    "url": "https://github.com/harshit-tomar-dev/magic-rose/issues"
+  },
+  "keywords": [
+    "threejs",
+    "mediapipe",
+    "augmented-reality",
+    "hand-tracking",
+    "gesture-recognition",
+    "webgl",
+    "gsap",
+    "creative-coding",
+    "computer-vision",
+    "3d-graphics",
+    "vite"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build",

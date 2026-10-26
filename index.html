@@ -3,7 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Magic Rose — Gesture Controlled 3D Flower</title>
+  
+  <!-- Primary Meta Tags -->
+  <title>Magic Rose — Gesture-Controlled 3D AR Flower</title>
+  <meta name="title" content="Magic Rose — Gesture-Controlled 3D AR Flower" />
+  <meta name="description" content="An interactive Augmented Reality 3D rose that sprouts and blooms in your palm using Three.js and MediaPipe hand gesture tracking." />
+  <meta name="theme-color" content="#0a0a10" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://github.com/harshit-tomar-dev/magic-rose" />
+  <meta property="og:title" content="Magic Rose — Gesture-Controlled 3D AR Flower" />
+  <meta property="og:description" content="Interactive 3D WebGL flower simulation controlled in real time by your hand gestures using MediaPipe and Three.js." />
+  <meta property="og:image" content="/assets/demo.jpg" />
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:title" content="Magic Rose — Gesture-Controlled 3D AR Flower" />
+  <meta property="twitter:description" content="Interactive 3D WebGL flower simulation controlled in real time by your hand gestures using MediaPipe and Three.js." />
+  <meta property="twitter:image" content="/assets/demo.jpg" />
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/src/styles/main.css" />
 </head>
 <body>
@@ -13,12 +36,94 @@
   <!-- Hidden webcam feed, used only as MediaPipe's input source -->
   <video id="webcam" autoplay playsinline muted></video>
 
-  <!-- Optional debug overlay for hand landmarks (toggle in Phase 3) -->
+  <!-- Optional debug overlay for hand landmarks -->
   <canvas id="debug-canvas"></canvas>
 
-  <!-- UI overlay (loading state, gesture hints) -->
+  <!-- Modern Glassmorphism UI HUD -->
   <div id="ui-overlay">
-    <p id="status-text">Loading Magic Rose...</p>
+    <header class="hud-header">
+      <div class="hud-brand">
+        <span class="hud-pulse"></span>
+        <h1 class="hud-title">Magic Rose <span class="badge">AR</span></h1>
+      </div>
+      <div class="hud-actions">
+        <button id="btn-toggle-guide" class="hud-btn" title="Toggle Gesture Guide (H)" aria-label="Toggle Guide">
+          <span class="icon">ℹ️</span> Guide
+        </button>
+        <button id="btn-toggle-debug" class="hud-btn" title="Toggle Tracking Wireframe (D)" aria-label="Toggle Landmarks">
+          <span class="icon">🖐️</span> Wireframe
+        </button>
+        <button id="btn-reset" class="hud-btn" title="Reset Flower (R)" aria-label="Reset Flower">
+          <span class="icon">↺</span> Reset
+        </button>
+      </div>
+    </header>
+
+    <!-- Main dynamic status card -->
+    <div class="hud-status-card">
+      <div class="status-indicator-bar">
+        <span id="status-icon" class="status-icon">✨</span>
+        <div class="status-info">
+          <p id="status-text" class="status-text">Loading Magic Rose...</p>
+          <p id="status-subtext" class="status-subtext">Initializing camera & neural models</p>
+        </div>
+      </div>
+      <div id="debug-telemetry" class="debug-telemetry" style="display: none;">
+        <span>Pinch: <b id="tele-pinch">false</b></span>
+        <span>Open: <b id="tele-open">0.00</b></span>
+        <span>Depth: <b id="tele-depth">0.00</b></span>
+      </div>
+    </div>
+
+    <!-- Collapsible gesture interactive guide -->
+    <aside id="guide-card" class="guide-card">
+      <div class="guide-header">
+        <h3>Gesture Controls</h3>
+        <button id="btn-close-guide" class="btn-close" aria-label="Close Guide">✕</button>
+      </div>
+      <div class="guide-steps">
+        <div class="guide-step">
+          <span class="step-icon">🤏</span>
+          <div class="step-desc">
+            <strong>1. Pinch to Plant</strong>
+            <span>Pinch index & thumb together in view to spawn a glowing seed.</span>
+          </div>
+        </div>
+        <div class="guide-step">
+          <span class="step-icon">🌿</span>
+          <div class="step-desc">
+            <strong>2. Open Hand to Grow</strong>
+            <span>Slowly open your palm to grow the stem and unfurl green leaves.</span>
+          </div>
+        </div>
+        <div class="guide-step">
+          <span class="step-icon">🌸</span>
+          <div class="step-desc">
+            <strong>3. Hold Open to Bloom</strong>
+            <span>Keep your hand fully open to trigger the 3-layer rose bloom burst!</span>
+          </div>
+        </div>
+        <div class="guide-step">
+          <span class="step-icon">✨</span>
+          <div class="step-desc">
+            <strong>4. Control Petals</strong>
+            <span>Curl and uncurl fingers to dynamically open and close petals.</span>
+          </div>
+        </div>
+        <div class="guide-step">
+          <span class="step-icon">↕️</span>
+          <div class="step-desc">
+            <strong>5. Depth & Scale</strong>
+            <span>Move your hand closer or further from camera to scale in 3D.</span>
+          </div>
+        </div>
+      </div>
+      <div class="guide-shortcuts">
+        <span class="kbd-pill"><kbd>R</kbd> Reset</span>
+        <span class="kbd-pill"><kbd>D</kbd> Wireframe</span>
+        <span class="kbd-pill"><kbd>H</kbd> Hide Guide</span>
+      </div>
+    </aside>
   </div>
 
   <script type="module" src="/src/main.js"></script>
